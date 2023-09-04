@@ -1,4 +1,5 @@
 - x set up and minimize
-- .. set up reducer to enable plus and minus buttons to change a number  
+- x set up reducer to enable plus and minus buttons to change a number  
+- .. change more than one variable in state on actiong
 
 - fix typescript any's

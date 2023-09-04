@@ -2,11 +2,13 @@ import { useReducer } from 'react';
 import './App.scss';
 
 interface IState {
-  count: number
+  count: number;
+  logMessage: string;
 }
 
 const initialState: IState = {
-  count: 0
+  count: 0,
+  logMessage : 'no logs yet'
 };
 
 const reducer = (state: IState, action: string) => {
@@ -14,9 +16,11 @@ const reducer = (state: IState, action: string) => {
   switch (action) {
     case 'change888':
       _state.count = 888;
+      _state.logMessage = 'change to 888';
       break;
     case 'change999':
       _state.count = 999;
+      _state.logMessage = 'change to 999';
       break;
   }
   return _state;
@@ -30,6 +34,7 @@ function App() {
     <div>
       <h1>Reducer Todo List</h1>
       <div>Number: {state.count}</div>
+      <div>Log message: {state.logMessage}</div>
       <div><button onClick={() => dispatch("change888")}>Change to 888 count</button></div>
       <div><button onClick={() => dispatch("change999")}>Change to 999 count</button></div>
     </div>
