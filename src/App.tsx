@@ -16,9 +16,11 @@ const initialState: IState = {
 
 const reducer = (state: IState, action: IAction) => {
 	const _state = { ...state };
+	console.log(action);
 	switch (action.type) {
 		case 'addTodo':
 			_state.todos.push(action.payload);
+			break;
 	}
 	return _state;
 }
@@ -35,9 +37,9 @@ function App() {
 			<div><button onClick={() => dispatch({type: 'addTodo', payload:todo})}>Add Todo</button></div>
 			<hr/>
 			<div>There are {state.todos.length} todos:</div>
-			{state.todos.map(todo => {
+			{state.todos.map((todo, index) => {
 				return (
-					<div>{todo}</div>
+					<div key={index}>{todo}</div>
 				)
 			})}
 		</div>
