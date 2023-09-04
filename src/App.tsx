@@ -1,4 +1,9 @@
 import { useReducer } from 'react';
+import { BsTrash3Fill } from 'react-icons/bs';
+import { BsPencilFill } from 'react-icons/bs';
+import { GiCancel } from 'react-icons/gi';
+import { BiSolidSave } from 'react-icons/bi';
+
 import './App.scss';
 
 interface ITodo {
@@ -98,22 +103,25 @@ function App() {
 
 	return (
 		<div>
-			<h1>Reducer Todo List</h1>
-			<input value={state.newTodoText} onChange={(e) => dispatch({ type: 'changeNewTodo', payload: e.target.value })} />{' '}
-			<button onClick={() => dispatch({ type: 'addTodo', payload: state.newTodoText })}>Add Todo</button>
-			<hr />
-			<div>There are {state.todos.length} todos:</div>
+			<h1 className="text-4xl mb-5">Reducer Todo List</h1>
+			<div className="flex gap-2 mb-5">
+				<input className="text-3xl rounded text-orange-950" value={state.newTodoText} onChange={(e) => dispatch({ type: 'changeNewTodo', payload: e.target.value })} />{' '}
+				<button className="bg-slate-800 text-slate-400 p-2 rounded" onClick={() => dispatch({ type: 'addTodo', payload: state.newTodoText })}>Add Todo</button>
+			</div>
+			<h2 className="text-2xl mb-2">Number of todos: {state.todos.length}</h2>
+			<ul className="list-disc ml-4">
 			{state.todos.map((todo, index) => {
 				return (
-					<div key={index}>
+					<li key={index}>
 						{todo.mode === 'editing' ? (
-							<div><input value={todo.text} onChange={(e) => dispatch({ type: 'changeEditing', payload: { index, text: e.target.value } })} /> <button onClick={() => dispatch({ type: 'cancelEditing', payload: index })}>Cancel</button> <button onClick={() => dispatch({ type: 'saveEditing', payload: index })}>Save</button></div>
+							<div className="flex gap-2 text-xl"><input value={todo.text} onChange={(e) => dispatch({ type: 'changeEditing', payload: { index, text: e.target.value } })} /> <BiSolidSave className="cursor-pointer text-lg mt-[.25rem]" onClick={() => dispatch({ type: 'saveEditing', payload: index })}/><GiCancel className="cursor-pointer text-base mt-[.3rem]" onClick={() => dispatch({ type: 'cancelEditing', payload: index })}/> </div>
 						) : (
-							<div key={index}>{todo.text} <button onClick={() => dispatch({ type: 'deleteTodo', payload: index })}>Delete</button> <button onClick={() => dispatch({ type: 'editTodo', payload: index })}>Edit</button></div>
+							<div className="flex gap-2 text-xl"><span className="text-orange-950">{todo.text}</span> <BsPencilFill className="cursor-pointer text-sm mt-[.4rem]" onClick={() => dispatch({ type: 'editTodo', payload: index })}/><BsTrash3Fill className="cursor-pointer text-sm mt-[.4rem]" onClick={() => dispatch({ type: 'deleteTodo', payload: index })}/> </div>
 						)}
-					</div>
+					</li>
 				)
 			})}
+			</ul>
 		</div>
 	)
 }
