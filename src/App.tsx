@@ -51,7 +51,8 @@ const reducer = (state: IState, action: IAction) => {
 		case 'editTodo':
 			if (typeof action.payload === 'number') {
 				index = action.payload;
-				console.log(`editing todo index ${index}`);
+				const item = _state.todos[index];
+				console.log(`we are editing the item: ${item.text}`);
 			}
 			break;
 		case 'changeNewTodo':
