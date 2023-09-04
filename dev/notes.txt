@@ -2,7 +2,6 @@
 - x set up reducer to enable plus and minus buttons to change a number  
 - x change more than one variable in state on actiong
 - x fix typescript any's
-- .. make todo list
-	- .. redefine IState for todo list
-
-- put state variable in useReducer
+- x make todo list
+	- x redefine IState for todo list
+- .. put state variable in useReducer
