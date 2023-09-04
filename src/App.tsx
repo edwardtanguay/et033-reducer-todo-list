@@ -81,6 +81,14 @@ const reducer = (state: IState, action: IAction) => {
 				item.text = editedTodoText;
 			}
 			break;
+		case 'saveEditing':
+			if (typeof action.payload === 'number') {
+				index = action.payload;
+				const item = _state.todos[index];
+				item.mode = 'normal';
+				item.originalEditText = '';
+			}
+			break;
 	}
 	return _state;
 }
