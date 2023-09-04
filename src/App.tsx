@@ -7,7 +7,7 @@ interface IState {
 
 interface IAction {
 	type: string;
-	payload: string;
+	payload: string | number;
 }
 
 const initialState: IState = {
@@ -19,7 +19,10 @@ const reducer = (state: IState, action: IAction) => {
 	console.log(action);
 	switch (action.type) {
 		case 'addTodo':
-			_state.todos.push(action.payload);
+			if(typeof action.payload == 'string') _state.todos.push(action.payload);
+			break;
+		case 'deleteTodo':
+			console.log(`deleting todo with index ${action.payload}`);
 			break;
 	}
 	return _state;
@@ -39,7 +42,7 @@ function App() {
 			<div>There are {state.todos.length} todos:</div>
 			{state.todos.map((todo, index) => {
 				return (
-					<div key={index}>{todo}</div>
+					<div key={index}>{todo} <button onClick={() => dispatch({ type: 'deleteTodo', payload: index})}>Delete</button></div>
 				)
 			})}
 		</div>
