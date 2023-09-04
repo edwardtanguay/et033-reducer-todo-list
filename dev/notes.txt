@@ -4,4 +4,5 @@
 - x fix typescript any's
 - x make todo list
 	- x redefine IState for todo list
-- .. put state variable in useReducer
+- x put state variable in useReducer
+- .. enable user to edit todo
