@@ -52,7 +52,14 @@ const reducer = (state: IState, action: IAction) => {
 			if (typeof action.payload === 'number') {
 				index = action.payload;
 				const item = _state.todos[index];
-				console.log(`we are editing the item: ${item.text}`);
+				item.mode = 'editing';
+			}
+			break;
+		case 'cancelEditing':
+			if (typeof action.payload === 'number') {
+				index = action.payload;
+				const item = _state.todos[index];
+				item.mode = 'normal';
 			}
 			break;
 		case 'changeNewTodo':
@@ -77,7 +84,13 @@ function App() {
 			<div>There are {state.todos.length} todos:</div>
 			{state.todos.map((todo, index) => {
 				return (
-					<div key={index}>{todo.text} <button onClick={() => dispatch({ type: 'deleteTodo', payload: index })}>Delete</button> <button onClick={() => dispatch({ type: 'editTodo', payload: index })}>Edit</button></div>
+					<>
+						{todo.mode === 'editing' ? (
+							<div key={index}><input value={todo.text}/> <button onClick={() => dispatch({ type: 'cancelEditing', payload: index })}>Cancel</button> <button onClick={() => dispatch({ type: 'editTodo', payload: index })}>Save</button></div>
+						) : (
+							<div key={index}>{todo.text} <button onClick={() => dispatch({ type: 'deleteTodo', payload: index })}>Delete</button> <button onClick={() => dispatch({ type: 'editTodo', payload: index })}>Edit</button></div>
+						)}
+					</>
 				)
 			})}
 		</div>
