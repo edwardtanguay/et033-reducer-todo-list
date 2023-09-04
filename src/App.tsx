@@ -48,8 +48,8 @@ function App() {
 	return (
 		<div>
 			<h1>Reducer Todo List</h1>
-			<input value={state.newTodo} onChange={(e) => dispatch({ type: 'changeNewTodo', payload: e.target.value })} />
-			<div><button onClick={() => dispatch({ type: 'addTodo', payload: state.newTodo })}>Add Todo</button></div>
+			<input value={state.newTodo} onChange={(e) => dispatch({ type: 'changeNewTodo', payload: e.target.value })} />{' '}
+			<button onClick={() => dispatch({ type: 'addTodo', payload: state.newTodo })}>Add Todo</button>
 			<hr />
 			<div>There are {state.todos.length} todos:</div>
 			{state.todos.map((todo, index) => {
