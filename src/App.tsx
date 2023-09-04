@@ -11,15 +11,14 @@ interface IState {
 	newTodoText: string;
 }
 
-interface IPayload {
+interface IChangeEditing {
 	index: number;
-	todo: ITodo;
-	newTodoText: string;
+	text: string;
 }
 
 interface IAction {
 	type: string;
-	payload: number | string | ITodo;
+	payload: number | string | ITodo | IChangeEditing;
 }
 
 const initialState: IState = {
@@ -68,6 +67,15 @@ const reducer = (state: IState, action: IAction) => {
 				_state.newTodoText = newTodoText;
 			}
 			break;
+		case 'changeEditing':
+			if (typeof action.payload === 'object') {
+				const changeEditing: IChangeEditing = action.payload as IChangeEditing;
+				const editedTodoText = action.payload.text;
+				const index = changeEditing.index;
+				const item = _state.todos[index];
+				item.text = editedTodoText;
+			}
+			break;
 	}
 	return _state;
 }
@@ -84,13 +92,13 @@ function App() {
 			<div>There are {state.todos.length} todos:</div>
 			{state.todos.map((todo, index) => {
 				return (
-					<>
+					<div key={index}>
 						{todo.mode === 'editing' ? (
-							<div key={index}><input value={todo.text}/> <button onClick={() => dispatch({ type: 'cancelEditing', payload: index })}>Cancel</button> <button onClick={() => dispatch({ type: 'editTodo', payload: index })}>Save</button></div>
+							<div><input value={todo.text} onChange={(e) => dispatch({ type: 'changeEditing', payload: { index, text: e.target.value } })} /> <button onClick={() => dispatch({ type: 'cancelEditing', payload: index })}>Cancel</button> <button onClick={() => dispatch({ type: 'saveEditing', payload: index })}>Save</button></div>
 						) : (
 							<div key={index}>{todo.text} <button onClick={() => dispatch({ type: 'deleteTodo', payload: index })}>Delete</button> <button onClick={() => dispatch({ type: 'editTodo', payload: index })}>Edit</button></div>
 						)}
-					</>
+					</div>
 				)
 			})}
 		</div>
