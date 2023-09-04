@@ -3,7 +3,7 @@ import './App.scss';
 
 interface IState {
 	todos: string[];
-	todo: string;
+	newTodo: string;
 }
 
 interface IAction {
@@ -13,7 +13,7 @@ interface IAction {
 
 const initialState: IState = {
 	todos: [],
-	todo: ''
+	newTodo: ''
 };
 
 const reducer = (state: IState, action: IAction) => {
@@ -23,7 +23,7 @@ const reducer = (state: IState, action: IAction) => {
 			if (typeof action.payload == 'string') {
 				const todo = action.payload;
 				_state.todos.push(todo);
-				_state.todo = '';
+				_state.newTodo = '';
 			}
 			break;
 		case 'deleteTodo':
@@ -32,10 +32,10 @@ const reducer = (state: IState, action: IAction) => {
 				_state.todos.splice(index, 1);
 			}
 			break;
-		case 'changeTodo':
+		case 'changeNewTodo':
 			if (typeof action.payload == 'string') {
 				const changedTodo = action.payload;
-				_state.todo = changedTodo;
+				_state.newTodo = changedTodo;
 			}
 			break;
 	}
@@ -48,8 +48,8 @@ function App() {
 	return (
 		<div>
 			<h1>Reducer Todo List</h1>
-			<input value={state.todo} onChange={(e) => dispatch({ type: 'changeTodo', payload: e.target.value })} />
-			<div><button onClick={() => dispatch({ type: 'addTodo', payload: state.todo })}>Add Todo</button></div>
+			<input value={state.newTodo} onChange={(e) => dispatch({ type: 'changeNewTodo', payload: e.target.value })} />
+			<div><button onClick={() => dispatch({ type: 'addTodo', payload: state.newTodo })}>Add Todo</button></div>
 			<hr />
 			<div>There are {state.todos.length} todos:</div>
 			{state.todos.map((todo, index) => {
