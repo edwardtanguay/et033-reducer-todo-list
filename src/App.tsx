@@ -4,6 +4,7 @@ import './App.scss';
 interface ITodo {
 	text: string;
 	mode: string;
+	originalEditText: string;
 }
 
 interface IState {
@@ -35,7 +36,8 @@ const reducer = (state: IState, action: IAction) => {
 				const newTodoText = action.payload;
 				const todo: ITodo = {
 					text: newTodoText,
-					mode: 'normal'
+					mode: 'normal',
+					originalEditText: ''
 				}
 				_state.todos.push(todo);
 				_state.newTodoText = '';
@@ -52,6 +54,7 @@ const reducer = (state: IState, action: IAction) => {
 				index = action.payload;
 				const item = _state.todos[index];
 				item.mode = 'editing';
+				item.originalEditText = item.text;
 			}
 			break;
 		case 'cancelEditing':
@@ -59,6 +62,8 @@ const reducer = (state: IState, action: IAction) => {
 				index = action.payload;
 				const item = _state.todos[index];
 				item.mode = 'normal';
+				item.text = item.originalEditText;
+				item.originalEditText = '';
 			}
 			break;
 		case 'changeNewTodo':
